@@ -2,11 +2,12 @@ import { useState, useEffect } from "react";
 import styled from "styled-components";
 import db from "../../utils/db";
 import { collection, addDoc, doc, onSnapshot, query } from "firebase/firestore";
-
+import Color from "../../assets/color";
 const OuterWrapper = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
+  margin-top: 4vh;
 `;
 
 const Wrapper = styled.div`
@@ -15,16 +16,17 @@ const Wrapper = styled.div`
   border-radius: 6px;
   align-self: center;
   height: fit-content;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  box-shadow: 0px 0px 4px 1px rgba(0, 0, 0, 0.2);
+  border: 1px solid ${(props) => props.theme.border};
+  box-shadow: 0px 0px 4px 1px ${(props) => props.theme.shadow};
+  background-color: green;
 `;
 
 const Input = styled.input.attrs({
   type: "text",
 })`
-  height: 4vh;
+  height: 6vh;
   margin-top: ${(props) => (props.focused ? "0.4%" : 0)};
-  width: ${(props) => (props.isTitle ? "25vw" : "30vw")};
+  width: ${(props) => (props.isTitle ? "28vw" : "30vw")};
   border-radius: 6px;
   border: none;
   padding-left: 2%;
@@ -32,6 +34,8 @@ const Input = styled.input.attrs({
   font-weight: bold;
   font-family: "QuickSand", sans-serif;
   outline: none;
+  color: rgba(0, 0, 0, 0.8);
+  background-color: ${(props) => props.theme.background};
 `;
 
 const BottomView = styled.div`
@@ -48,27 +52,24 @@ const BottomView = styled.div`
 const ImageContainer = styled.div`
   height: 35px;
   width: 35px;
-  margin-left: 2%;
+  margin-left: ${(props) => (props.isFromList ? "0" : "2%")};
   cursor: pointer;
   border-radius: 2rem;
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-top: ${(props) => (props.isFromList ? "2vh" : "0vh")};
   &:hover {
     background-color: rgba(0, 0, 0, 0.09);
   }
-`;
-
-const ColorSelector = styled.img`
-  height: 18px;
-  width: 18px;
-  object-fit: contain;
-  cursor: pointer;
+  .svg {
+    fill: green;
+  }
 `;
 
 const CloseButton = styled.h4`
   font-family: "QuickSand", sans-serif;
-  color: rgba(0, 0, 0, 0.4);
+  color: ${(props) => props.theme.font};
   margin-right: 2%;
   cursor: pointer;
 `;
@@ -78,19 +79,37 @@ const NotesContainer = styled.div`
   width: 90vw;
   margin-top: 4%;
   grid-template-columns: repeat(4, 2fr);
-  grid-column-gap: 4%;
+  grid-column-gap: 2%;
   grid-row-gap: 4vh;
 `;
 
 const NoteItem = styled.div`
-  background-color: blue;
-  border-radius: 10px;
+  border: 1.5px solid ${(props) => props.theme.border};
+  border-radius: 0.4rem;
+  min-height: 10vh;
+  min-width: 18vw;
+  max-height: 15vh;
+  max-width: 20vw;
+  overflow: hidden;
+  padding: 4% 6% 4% 6%;
 `;
 
 const NoteTitle = styled.h1`
   font-family: "QuickSand", sans-serif;
-  color: rgba(0, 0, 0, 0.4);
-  margin-right: 2%;
+  color: ${(props) => props.theme.font};
+  font-size: 1.2rem;
+  font-weight: 600;
+`;
+
+const NoteData = styled.h3`
+  font-family: "QuickSand", sans-serif;
+  color: ${(props) => props.theme.font};
+  font-size: 1rem;
+  font-weight: 400;
+  margin-top: 2%;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 `;
 
 const Note = () => {
@@ -157,7 +176,7 @@ const Note = () => {
         {inputFocused ? (
           <BottomView>
             <ImageContainer>
-              <ColorSelector src="color.png" />
+              <Color />
             </ImageContainer>
             <CloseButton onClick={() => addNote()}>Close</CloseButton>
           </BottomView>
@@ -169,6 +188,10 @@ const Note = () => {
             return (
               <NoteItem index={index} key={index}>
                 <NoteTitle>{item.title}</NoteTitle>
+                <NoteData>{item.note}</NoteData>
+                <ImageContainer isFromList={true}>
+                  <Color />
+                </ImageContainer>
               </NoteItem>
             );
           }
