@@ -15,6 +15,7 @@ body{
     align-items: center;
     justify-content: center;
     font-family: 'QuickSand', sans-serif;
+    background-color: ${(props) => props.theme.background}
 }
 `;
 
