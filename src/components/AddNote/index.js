@@ -18,7 +18,6 @@ const Wrapper = styled.div`
   height: fit-content;
   border: 1px solid ${(props) => props.theme.border};
   box-shadow: 0px 0px 4px 1px ${(props) => props.theme.shadow};
-  background-color: green;
 `;
 
 const Input = styled.input.attrs({
@@ -34,7 +33,7 @@ const Input = styled.input.attrs({
   font-weight: bold;
   font-family: "QuickSand", sans-serif;
   outline: none;
-  color: rgba(0, 0, 0, 0.8);
+  color: ${(props) => props.theme.font};
   background-color: ${(props) => props.theme.background};
 `;
 
