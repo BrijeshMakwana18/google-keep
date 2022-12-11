@@ -77,9 +77,12 @@ const NotesContainer = styled.div`
   display: grid;
   width: 90vw;
   margin-top: 4%;
-  grid-template-columns: repeat(4, 2fr);
+  grid-template-columns: repeat(4, 1fr);
   grid-column-gap: 2%;
   grid-row-gap: 4vh;
+  @media only screen and (max-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
 `;
 
 const NoteItem = styled.div`
@@ -88,7 +91,7 @@ const NoteItem = styled.div`
   min-height: 10vh;
   min-width: 18vw;
   max-height: 15vh;
-  max-width: 20vw;
+  /* max-width: 20vw; */
   overflow: hidden;
   padding: 4% 6% 4% 6%;
 `;
